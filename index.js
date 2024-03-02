@@ -59,7 +59,7 @@ function displayWeatherInfo(data) {
   cityDisplay.id = "location";
   content.appendChild(cityDisplay);
 
-  tempDisplay.textContent = `${(temp - 273).toFixed(1)}°C`;
+  tempDisplay.textContent = `${(temp - 273.15).toFixed(1)}°C`;
   tempDisplay.id = "temperature";
   content.appendChild(tempDisplay);
 
