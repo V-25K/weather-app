@@ -68,6 +68,7 @@ function displayWeatherInfo(data) {
   } = data;
 
   card.textContent = "";
+<<<<<<< HEAD
   lower_card.textContent = "";
   right_card.textContent = "";
   weather_card(
@@ -96,6 +97,55 @@ function displayWeatherInfo(data) {
     uv,
     airQualityIndex
   )
+=======
+  card.style.display = "block";
+
+  const blurDisplay = document.createElement("div");
+  const content = document.createElement("div");
+  const cityDisplay = document.createElement("h2");
+  const tempDisplay = document.createElement("h1");
+  const imgDisplay = document.createElement('img');
+  const descDisplay = document.createElement("h3");
+  const dayDisplay = document.createElement("h3");
+  const dateDisplay = document.createElement("h3");
+  const quoteDisplay = document.createElement("p");
+
+  blurDisplay.classList.add("blur-overlay");
+  card.appendChild(blurDisplay);
+
+  content.classList.add("content");
+  card.appendChild(content);
+
+  cityDisplay.textContent = city;
+  cityDisplay.id = "location";
+  content.appendChild(cityDisplay);
+
+  tempDisplay.textContent = `${(temp - 273.15).toFixed(1)}°C`;
+  tempDisplay.id = "temperature";
+  content.appendChild(tempDisplay);
+
+  imgDisplay.src = `./weather-icons/${getWeatherImage(id)}.png`
+  imgDisplay.id = 'weather-icon'
+  content.appendChild(imgDisplay);
+
+  descDisplay.textContent = description;
+  descDisplay.id = "weather";
+  content.appendChild(descDisplay);
+
+  dayDisplay.textContent = getDay();
+  dayDisplay.id = "day";
+  content.appendChild(dayDisplay);
+
+  dateDisplay.textContent = getDate();
+  dateDisplay.id = "date";
+  content.appendChild(dateDisplay);
+
+  quoteDisplay.id = "quote"; 
+  getQuote().then((quoteData) => {
+    quoteDisplay.textContent = quoteData.text;
+  });
+  content.appendChild(quoteDisplay);
+>>>>>>> f23368040818c06a77d968164338d182a468cdd3
 }
 
 function displayError(message) {
