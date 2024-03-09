@@ -68,7 +68,7 @@ function displayWeatherInfo(data) {
   } = data;
 
   card.textContent = "";
-<<<<<<< HEAD
+
   lower_card.textContent = "";
   right_card.textContent = "";
   weather_card(
@@ -97,7 +97,7 @@ function displayWeatherInfo(data) {
     uv,
     airQualityIndex
   )
-=======
+
   card.style.display = "block";
 
   const blurDisplay = document.createElement("div");
@@ -145,7 +145,6 @@ function displayWeatherInfo(data) {
     quoteDisplay.textContent = quoteData.text;
   });
   content.appendChild(quoteDisplay);
->>>>>>> f23368040818c06a77d968164338d182a468cdd3
 }
 
 function displayError(message) {
