@@ -1,27 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Weather App</title>
-    <link rel="stylesheet" href="./style.css" />
-    <script src="./index.js" defer></script>
-  </head>
-  <body>
-    <div class="container">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script src="./index.js" defer></script>
+</head>
+
+<body>
+  <main>
+    <section class="top-section">
       <form id="weatherForm">
-        <input
-          type="text"
-          alt="City"
-          placeholder="Enter City..."
-          id="city"
-          autocomplete="off"
-          required
-        />
+        <input type="text" alt="City" placeholder="Search City, State, Country..." id="city" autocomplete="off" required />
         <button type="submit" id="searchBtn">Search</button>
       </form>
+      <div class="profile">
+        <a href="#profile" target="_top">
+          <img src="./photo_img.png" alt="Profile Photo" />
+          <p class="userName">Vibhor Kothari</p>
+        </a>
+      </div>
+    </section>
+    <section class="remaining-section">
+      <div class="left-container">
+        <div class="weather-card">
+        </div> 
+        <div class="other-info-container">
+        </div>
+      </div>
+      <div class="right-container">
+        <div class="todays-highlight">
+        </div> 
+      </div>
+    </section>
+  </main>
+</body>
 
-      <div class="weather-card"></div>
-    </div>
-  </body>
 </html>

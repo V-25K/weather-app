@@ -1,10 +1,15 @@
-body {
-  font-family: Arial, Helvetica, sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+* {
   box-sizing: border-box;
-  background: linear-gradient(45deg, hsl(0, 0%, 10%), hsl(0, 0%, 40%));
-  margin: 0; 
-  height: 100vh; 
-  overflow: hidden;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  color: white;
 }
 
 h1,
@@ -18,144 +23,462 @@ p {
   padding: 0;
 }
 
+main {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+}
 
-.container {
-  position: relative;
-  width: 600px;
-  height: 600px;
+/* TOP SECTION Styling--- Search and Profile */
+.top-section {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+  padding: 1.4vw 2.6vw;
+}
+
+#weatherForm {
+  background-color: hsl(155 69% 10%);
+  border-radius: 28px;
+  border: none;
+  width: 30vw;
+  padding: 0.4vw 0.6vw;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#weatherForm > input {
+  font-size: 1vw;
+  padding: 0.4vw 0.6vw;
+  background-color: transparent;
+  border: none;
+  color: #b1b1b1;
+}
+
+#weatherForm > input::placeholder {
+  color: #b1b1b1;
+}
+
+#weatherForm > button {
+  font-size: 1vw;
+  padding: 0.4vw 0.6vw;
+  background-color: transparent;
+  border: none;
+  color: #b1b1b1;
+}
+
+#weatherForm > button:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  background-color: hsl(155 69% 20%);
+  border-radius: 28px;
+  color: white;
+}
+
+.profile > a {
+  padding: 0.8vw 2vw;
+  border: none;
+  border-radius: 28px;
+  background-color: hsl(155 69% 10%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.profile > a:hover {
+  background-color: hsl(155 69% 20%);
+}
+
+.profile > a img {
+  width: 30px;
+  margin: 0 1vw 0 0;
+}
+
+.userName {
+  font-size: 1vw;
+  color: #b1b1b1;
+}
+
+.profile > a:hover .userName {
+  color: white;
+  transform: scale(1.1);
+}
+
+/*END of TOP Section*/
+
+/*START of OTHER SECTION styling*/
+
+.remaining-section {
+  height: 86vh;
+  display: flex;
+  column-gap: 4%;
+  padding: 0 1% 1% 2%;
+}
+
+/*LEFT Container*/
+.left-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 35px auto; 
-  padding: 2.4% 0;
-  background: linear-gradient(150deg, hsl(100, 100%, 100%), hsl(0, 0%, 0%));
-  border-radius: 4%;
-}
-
-form {
-  position: absolute;
-  top: 4%;
-}
-
-input {
-  font-size: 1.2rem;
-  padding: 8px 24px;
-  margin: 0 54px 0 0;
-  border-radius: 8px;
-}
-
-button[type="submit"] {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: hsl(0, 0%, 100%);
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  background-color: hsl(120, 73%, 58%);
-}
-
-button[type="submit"]:hover {
-  background-color: hsl(120, 73%, 70%);
-  color: black;
-  animation: glow 2s infinite alternate;
-}
-
-@keyframes glow {
-  0% {
-    box-shadow: 0 0 1px 0 hsl(120, 66%, 56%);
-  }
-  100% {
-    box-shadow: 0 0 40px 2px hsl(120, 66%, 50%);
-  }
+  flex: 1;
+  gap: 3%;
 }
 
 .weather-card {
   position: relative;
-  width: 460px;
-  height: 510px;
-  background: linear-gradient(180deg, hsl(210, 100%, 75%), hsl(40, 100%, 75%));
-  margin: 6% 0 0 0;
-  border-radius: 36px 75px;
-  box-shadow: 0 0 20px 4px hsl(208, 30%, 89%);
+  flex: 1;
+  background: radial-gradient(
+    hsl(154 69% 18% / 1),
+    hsl(154 69% 14% / 1),
+    hsl(154 69% 10% / 1)
+  );
+  border-radius: 16px;
+  padding: 1.2vw 1vw 0.6vw 1vw;
+}
+
+.upper {
+  margin: 0 1vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.weather-card > h4 {
+  font-size: 2.2vw;
+  letter-spacing: 0.1vw;
+  padding: 1.8vw 0 0 1.2vw;
+  font-weight: 400;
+}
+
+.weather-card > h3 {
+  font-size: 1.2vw;
+  letter-spacing: 0.1vw;
+  padding: 0.4vw 0 0 1.2vw;
+  font-weight: 400;
+}
+
+.weather-card > h5 {
+  font-size: 1.2vw;
+  letter-spacing: 0.1vw;
+  padding: 0.2vw 0 0 1.2vw;
+  font-weight: 400;
+}
+
+.weather-card > h1 {
+  font-size: 4.6vw;
+  letter-spacing: 0.1vw;
+  padding: 2vw 0 0 1.2vw;
+  font-weight: 400;
+}
+
+.temp {
+  position: absolute;
+  bottom: 23px;
+  right: 0;
+  width: 37vh;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/* toggle in label designing */
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 100%;
+  background-color: white;
+  border-radius: 30px;
+  border: none;
+}
+
+/* After slide changes */
+.toggle:after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 100%;
+  border-radius: 30px;
+  background-color: hsl(155 69% 5%);
+  top: 0;
+  left: -1px;
+  transition: all 0.3s;
+}
+
+.unit-change > label {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* Toggle text */
+.unit-change > label > p {
+  font-weight: bold;
+  font-size: 25px;
+  color: hsl(155 69% 10%);
+  display: inline-block;
+}
+
+/* Checkbox checked effect */
+.checkbox:checked + .toggle::after {
+  left: 41px;
+}
+
+/* Checkbox vanished */
+.checkbox {
   display: none;
 }
 
-.weather-card::before {
-  content: "";
-  width: 100%;
+.current-city {
+  display: flex;
+  background-color: white;
+  padding: 0.2vw 1vw;
   height: 100%;
-  position: absolute;
-  backdrop-filter: blur(10px);
-  z-index: -1;
+  border-radius: 32px;
+  justify-content: center;
+  align-items: center;
 }
 
-.content {
-  position: relative;
-  z-index: 1;
-}
-
-.blur-overlay {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  backdrop-filter: blur(4px);
-  border-radius: 36px 76px;
-}
-
-.content > h2 {
-  font-size: 2.4rem;
-  padding: 16px 0 0 26px;
-}
-
-.content > h1 {
-  font-size: 5rem;
-  padding: 10px 0 0 26px;
-}
-
-.content > #weather {
-  margin: 0%;
-  font-size: 1.8rem;
-  padding: 32px 0 0 26px;
-}
-
-.content > #day {
-  margin: 0%;
-  font-size: 1.2rem;
-  padding: 28px 0 0 26px;
-}
-
-.content > #date {
-  margin: 0%;
-  font-size: 1.2rem;
-  padding: 4px 0 0 26px;
-}
-
-.content > #weather-icon {
-  position: absolute;
-  width: 80px;
-  right: 14%;
-  top: 17%;
-}
-
-.content > p {
-  padding: 2em 1.5em;
-  font-size: 1.1rem;
+.current-city p {
+  color: hsl(155 69% 20%);
   font-weight: bold;
+  vertical-align: super;
+  display: inline-block;
+}
+
+.weather-card > img {
+  position: absolute;
+  top: 5.4vw;
+  right: 6vw;
+  height: 8vw;
+}
+
+.other-info-container {
+  flex: 1;
+  display: flex;
+  background: radial-gradient(
+    hsl(154 69% 18% / 1),
+    hsl(154 69% 14% / 1),
+    hsl(154 69% 10% / 1)
+  );
+  border-radius: 16px;
+  padding: 1.2vw 1vw 0.4vw 1vw;
+}
+
+.today-week-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1.5;
+  justify-content: space-between;
+}
+
+.heading {
+  padding: 0 0 0 1.2vw;
+}
+
+.heading > h1 {
+  font-weight: 400;
+  letter-spacing: 0.2vw;
+}
+
+.weather-atTime {
+  display: flex;
+  justify-content: space-around;
+}
+
+.weather-atTime > .atTime-container > span {
+  font-size: 0.98vw;
+}
+
+.atTime-container {
+  height: 8vw;
+  width: 3.4vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: 2px solid #b1b1b1;
+  border-radius: 32px;
+  align-items: center;
+  box-shadow: 0 0 3px 1px yellowgreen;
+  background-color: hsl(153 69% 16% / 1);
+}
+
+.atTime-container > img {
+  width: 36px;
+  height: 36px;
+}
+
+.atTime-container-temp {
+  font-size: 0.8vw;
+}
+
+.tomorrow-weather {
+  display: flex;
+  justify-content: space-around;
+  height: 5vw;
+  background-color: hsl(153, 69%, 5%);
+  border-radius: 16px;
+  margin: 0 1.2vw 0 1.2vw;
+  align-items: center;
+}
+
+.tomorrow-weather > div > p {
+  padding: 0 0 0.6vw 0;
+}
+
+.tomorrow-weather > div > span {
+  font-size: 0.9vw;
+  display: flex;
+  justify-content: center;
+}
+
+.temperature-nextDay {
+  font-size: 2.6vw;
+}
+
+.tomorrow-weather > img {
+  width: 4vw;
+}
+
+.sun-up-down-container {
+  flex: 0.6;
+  display: flex;
+  flex-direction: column;
+  height: 96%;
+  background-color: #04160e;
+  margin: 0 1vw;
+  border-radius: 16px;
+  padding: 1.2vw;
+  justify-content: space-between;
+}
+
+.sun-up-down-innerContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.sun-up-down-innerContent > h5 {
+  font-weight: 400;
+  letter-spacing: 0.1vw;
+  font-size: 0.9vw;
+}
+
+.sun-up-down-innerContent > h4 {
+  font-weight: 400;
+  font-size: 1.5vw;
+  padding-top: 0.6vw;
+}
+
+.innerKaInner {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.6vw;
+}
+
+.innerKaInner > h4 {
+  font-weight: 400;
+  font-size: 1.5vw;
+}
+
+.innerKaInner > span {
+  font-weight: 400;
+  font-size: 1vw;
+  padding-top: 0.5vw;
+}
+
+/*RIGHT Container*/
+.right-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6%;
+  flex: 1;
+}
+
+.todays-highlight {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  background-color: hsl(155 69% 10%);
+  padding: 2%;
+}
+
+.todays-highlight > h1 {
   text-align: center;
+  font-size: 2.2vw;
+  letter-spacing: 0.2vw;
+  font-weight: 400;
 }
 
-.content > p::before {
-  content: open-quote;
+.todays-highlight-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 16px;
+  background-color: hsl(155 69% 10%);
+  padding: 4.5% 2%;
+  row-gap: 4%;
+  column-gap: 4%;
 }
 
-.content > p::after {
-  content: close-quote;
+.highlistSection-content {
+  position: relative;
+  flex: 1;
+  height: 242px;
+  border-radius: 16px;
+  background-color: hsl(155 69% 5%);
+  padding: 0.8vw 1vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.errorDisplay {
-  font-size: 2rem;
-  color: black;
-  text-align: center;
-  padding: 4%;
+.highlistSection-content > h4 {
+  font-size: 1.6vw;
+  font-weight: 400;
+  letter-spacing: 0.2vw;
 }
+
+.highlistSection-content > img {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  transform: translate(-50%, -50%);
+  width: 6vw;
+}
+
+.humidity-info, .wind-info, .uv-info{
+  display: flex;
+  justify-content: space-between;
+}
+
+.highlistSection-quote{
+  flex: 1;
+  height: 242px;
+  border-radius: 16px;
+  background-color: hsl(155 69% 5%);
+  padding: 0.8vw 1vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.highlistSection-quote > h4 {
+  font-size: 1.6vw;
+  font-weight: 400;
+  letter-spacing: 0.2vw;
+}
+
+.quote-container{
+  padding: 2vw 0;
+}
+
+.quote-container > p{
+  font-style: italic;
+  font-size: 1.2vw;
+}
+
+.quote-container > p::before{
+  content: "“";
+}
+.quote-container > p::after{
+  content: "”";
+}
+/*END of OTHER section styling*/
