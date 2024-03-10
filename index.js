@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   // Default city
-  await getDefaultCityWeather()
+  await getDefaultCityWeather();
 });
 
 const form = document.getElementById("weatherForm");
@@ -9,6 +9,7 @@ const card = document.querySelector(".weather-card");
 const lower_card = document.querySelector(".other-info-container");
 const right_card = document.querySelector(".right-container");
 const apiKey = "db19ec52d7734e49968145350240703";
+let isMetric = true;
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -47,7 +48,7 @@ function displayWeatherInfo(data) {
       uv,
       wind_kph,
       wind_degree,
-      wind_dir
+      wind_dir,
     },
     forecast: {
       forecastday: [
@@ -78,16 +79,8 @@ function displayWeatherInfo(data) {
     weatherTypeText,
     maxtemp_c,
     mintemp_c
-  )
-  today_wala(
-    localtime, 
-    data, 
-    text, 
-    tomorrowIcon, 
-    avgtemp_c, 
-    sunrise, 
-    sunset
-  )
+  );
+  today_wala(localtime, data, text, tomorrowIcon, avgtemp_c, sunrise, sunset);
   rightWalaContainer(
     humidity,
     wind_kph,
@@ -95,18 +88,32 @@ function displayWeatherInfo(data) {
     wind_dir,
     uv,
     airQualityIndex
-  )
+  );
 }
 
 function displayError(message) {
-  const errorMsg = document.createElement("p");
-  errorMsg.textContent = message;
-  errorMsg.classList.add("errorDisplay");
+  const errorBtn = document.getElementById("errorCloseBtn");
+  const errorMessageElement = document.getElementById("errorMessage");
+  errorMessageElement.textContent = message;
+  const overlay = document.getElementById("overlay");
+  overlay.style.display = "flex";
 
-  card.textContent = "";
-  card.style.display = "flex";
-  card.appendChild(errorMsg);
-} 
+  errorBtn.addEventListener("click", function () {
+    const overlay = document.getElementById("overlay");
+    overlay.style.display = "none";
+  });
+}
+
+async function getDefaultCityWeather() {
+  const defaultCity = "Joshimath";
+
+  try {
+    const defaultWeatherData = await getWeatherData(defaultCity);
+    displayWeatherInfo(defaultWeatherData);
+  } catch (error) {
+    displayError(error);
+  }
+}
 
 function weather_card(
   localtime,
@@ -178,7 +185,11 @@ function weather_card(
 
     fehrenhietText.textContent = "F";
     celciusText.textContent = "C";
-    
+
+    const toggleButton = document.getElementById("switch");
+    toggleButton.addEventListener("change", () => {
+      handleUnitToggle();
+    });
     /* end of unit-change div*/
     /*end of upper_content*/
 
@@ -267,13 +278,13 @@ function today_wala(
     weatherImage.src = `https://${perHourIcon}`;
     weatherImage.alt = perHourText;
 
-    tempText.textContent = `${thatHourTemp_c}°C`;
-
     atATime_container.appendChild(timeText);
     atATime_container.appendChild(weatherImage);
     atATime_container.appendChild(tempText);
 
     weather_atATime.appendChild(atATime_container);
+
+    tempText.textContent = `${thatHourTemp_c}°C`;
   }
   /*end of heading and middle div of todayweek-container*/
 
@@ -299,7 +310,6 @@ function today_wala(
   weather_type.textContent = text;
 
   nextDay_temp_text.className = "temperature-nextDay";
-  nextDay_temp_text.textContent = `${avgtemp_c}°C`;
 
   nextDay_img.src = `https://${tomorrowIcon}`;
   nextDay_img.alt = text;
@@ -362,119 +372,163 @@ function today_wala(
   innerKaInner_1.appendChild(innerKaInner_1_heading);
   innerKaInner_2.appendChild(innerKaInner_2_heading);
   innerKaInner_3.appendChild(innerKaInner_3_heading);
+
+  nextDay_temp_text.textContent = `${avgtemp_c}°C`;
+
   /* end of sun-up-down-container*/
 }
 
-function rightWalaContainer(humidity, wind_kph, wind_degree, wind_dir, uv, airQualityIndex) {
-  const todays_highlight = document.createElement("div") 
-  right_card.appendChild(todays_highlight)
-  right_card.className = 'right-container'
-  todays_highlight.className = 'todays-highlight'
+function rightWalaContainer(
+  humidity,
+  wind_kph,
+  wind_degree,
+  wind_dir,
+  uv,
+  airQualityIndex
+) {
+  const todays_highlight = document.createElement("div");
+  right_card.appendChild(todays_highlight);
+  right_card.className = "right-container";
+  todays_highlight.className = "todays-highlight";
 
-  const todays_highlight_title = document.createElement("h1")
-  todays_highlight.appendChild(todays_highlight_title)
-  todays_highlight_title.textContent = 'Today\'s Highlight'
+  const todays_highlight_title = document.createElement("h1");
+  todays_highlight.appendChild(todays_highlight_title);
+  todays_highlight_title.textContent = "Today's Highlight";
 
-  const todays_highlight_grid = document.createElement("div")
-  todays_highlight.appendChild(todays_highlight_grid)
-  todays_highlight_grid.className = 'todays-highlight-grid'
+  const todays_highlight_grid = document.createElement("div");
+  todays_highlight.appendChild(todays_highlight_grid);
+  todays_highlight_grid.className = "todays-highlight-grid";
 
-  const highlistSection_content_humidity = document.createElement("div")
-  const highlistSection_content_windStatus = document.createElement("div")
-  const highlistSection_content_uv = document.createElement("div")
-  const highlistSection_quote = document.createElement("div")
+  const highlistSection_content_humidity = document.createElement("div");
+  const highlistSection_content_windStatus = document.createElement("div");
+  const highlistSection_content_uv = document.createElement("div");
+  const highlistSection_quote = document.createElement("div");
 
-  todays_highlight_grid.appendChild(highlistSection_content_humidity)
-  highlistSection_content_humidity.className = 'highlistSection-content'
+  todays_highlight_grid.appendChild(highlistSection_content_humidity);
+  highlistSection_content_humidity.className = "highlistSection-content";
 
-  todays_highlight_grid.appendChild(highlistSection_content_windStatus)
-  highlistSection_content_windStatus.className = 'highlistSection-content'
+  todays_highlight_grid.appendChild(highlistSection_content_windStatus);
+  highlistSection_content_windStatus.className = "highlistSection-content";
 
-  todays_highlight_grid.appendChild(highlistSection_content_uv)
-  highlistSection_content_uv.className = 'highlistSection-content'
+  todays_highlight_grid.appendChild(highlistSection_content_uv);
+  highlistSection_content_uv.className = "highlistSection-content";
 
-  todays_highlight_grid.appendChild(highlistSection_quote)
-  highlistSection_quote.className = 'highlistSection-quote'
+  todays_highlight_grid.appendChild(highlistSection_quote);
+  highlistSection_quote.className = "highlistSection-quote";
 
-  const highlistSection_content_humidity_title = document.createElement("h4")
-  const highlistSection_content_windStatus_title = document.createElement("h4")
-  const highlistSection_content_uv_title = document.createElement("h4")
+  const highlistSection_content_humidity_title = document.createElement("h4");
+  const highlistSection_content_windStatus_title = document.createElement("h4");
+  const highlistSection_content_uv_title = document.createElement("h4");
 
-  highlistSection_content_humidity.appendChild(highlistSection_content_humidity_title)
-  highlistSection_content_humidity_title.textContent = 'Humidity'
-  
-  highlistSection_content_windStatus.appendChild(highlistSection_content_windStatus_title)
-  highlistSection_content_windStatus_title.textContent = 'Wind Status'
-  
-  highlistSection_content_uv.appendChild(highlistSection_content_uv_title)
-  highlistSection_content_uv_title.textContent = 'UV'
+  highlistSection_content_humidity.appendChild(
+    highlistSection_content_humidity_title
+  );
+  highlistSection_content_humidity_title.textContent = "Humidity";
 
-  const highlistSection_quote_title = document.createElement("h4")
-  highlistSection_quote.appendChild(highlistSection_quote_title)
-  highlistSection_quote_title.textContent = 'Today\'s Quote'
+  highlistSection_content_windStatus.appendChild(
+    highlistSection_content_windStatus_title
+  );
+  highlistSection_content_windStatus_title.textContent = "Wind Status";
 
-  const highlistSection_content_humidity_image = document.createElement('img')
-  const highlistSection_content_windStatus_image = document.createElement('img')
-  const highlistSection_content_uv_image = document.createElement('img')
-  highlistSection_content_humidity.appendChild(highlistSection_content_humidity_image)
-  highlistSection_content_humidity_image.src = `./humidity.png`
-  highlistSection_content_humidity_image.alt = 'Humidity Icon' 
+  highlistSection_content_uv.appendChild(highlistSection_content_uv_title);
+  highlistSection_content_uv_title.textContent = "UV";
 
-  highlistSection_content_windStatus.appendChild(highlistSection_content_windStatus_image)
-  highlistSection_content_windStatus_image.src = './wind.png'
-  highlistSection_content_windStatus_image.alt = 'Wind Icon'
+  const highlistSection_quote_title = document.createElement("h4");
+  highlistSection_quote.appendChild(highlistSection_quote_title);
+  highlistSection_quote_title.textContent = "Today's Quote";
 
-  highlistSection_content_uv.appendChild(highlistSection_content_uv_image)
-  highlistSection_content_uv_image.src = './uv.png'
-  highlistSection_content_uv_image.alt = 'UV Icon'
+  const highlistSection_content_humidity_image = document.createElement("img");
+  const highlistSection_content_windStatus_image =
+    document.createElement("img");
+  const highlistSection_content_uv_image = document.createElement("img");
+  highlistSection_content_humidity.appendChild(
+    highlistSection_content_humidity_image
+  );
+  highlistSection_content_humidity_image.src = `./humidity.png`;
+  highlistSection_content_humidity_image.alt = "Humidity Icon";
 
-  const highlistSection_content_humidity_innerDiv = document.createElement('div')
-  const highlistSection_content_windStatus_innerDiv = document.createElement('div')
-  const highlistSection_content_uv_innerDiv = document.createElement('div')
-  const highlistSection_quote_innerDiv = document.createElement("div")
+  highlistSection_content_windStatus.appendChild(
+    highlistSection_content_windStatus_image
+  );
+  highlistSection_content_windStatus_image.src = "./wind.png";
+  highlistSection_content_windStatus_image.alt = "Wind Icon";
 
-  highlistSection_content_humidity.appendChild(highlistSection_content_humidity_innerDiv)
-  highlistSection_content_humidity_innerDiv.className = 'humidity-info'
+  highlistSection_content_uv.appendChild(highlistSection_content_uv_image);
+  highlistSection_content_uv_image.src = "./uv.png";
+  highlistSection_content_uv_image.alt = "UV Icon";
 
-  highlistSection_content_windStatus.appendChild(highlistSection_content_windStatus_innerDiv)
-  highlistSection_content_windStatus_innerDiv.className = 'wind-info'
+  const highlistSection_content_humidity_innerDiv =
+    document.createElement("div");
+  const highlistSection_content_windStatus_innerDiv =
+    document.createElement("div");
+  const highlistSection_content_uv_innerDiv = document.createElement("div");
+  const highlistSection_quote_innerDiv = document.createElement("div");
 
-  highlistSection_content_uv.appendChild(highlistSection_content_uv_innerDiv)
-  highlistSection_content_uv_innerDiv.className = 'uv-info'
+  highlistSection_content_humidity.appendChild(
+    highlistSection_content_humidity_innerDiv
+  );
+  highlistSection_content_humidity_innerDiv.className = "humidity-info";
 
-  highlistSection_quote.appendChild(highlistSection_quote_innerDiv)
-  highlistSection_quote_innerDiv.className = 'quote-container'
+  highlistSection_content_windStatus.appendChild(
+    highlistSection_content_windStatus_innerDiv
+  );
+  highlistSection_content_windStatus_innerDiv.className = "wind-info";
 
-  const highlistSection_content_humidity_innerDiv_span1 = document.createElement('span')
-  const highlistSection_content_humidity_innerDiv_span2 = document.createElement('span')
-  highlistSection_content_humidity_innerDiv.appendChild(highlistSection_content_humidity_innerDiv_span1)
-  highlistSection_content_humidity_innerDiv_span1.textContent = `${humidity}%`
+  highlistSection_content_uv.appendChild(highlistSection_content_uv_innerDiv);
+  highlistSection_content_uv_innerDiv.className = "uv-info";
 
-  highlistSection_content_humidity_innerDiv.appendChild(highlistSection_content_humidity_innerDiv_span2)
-  highlistSection_content_humidity_innerDiv_span2.textContent = getAirQuality(airQualityIndex)
+  highlistSection_quote.appendChild(highlistSection_quote_innerDiv);
+  highlistSection_quote_innerDiv.className = "quote-container";
 
-  const highlistSection_content_windStatus_innerDiv_span1 = document.createElement('span')
-  const highlistSection_content_windStatus_innerDiv_span2 = document.createElement('span')
-  highlistSection_content_windStatus_innerDiv.appendChild(highlistSection_content_windStatus_innerDiv_span1)
-  highlistSection_content_windStatus_innerDiv_span1.textContent = `${wind_kph} km/h`
+  const highlistSection_content_humidity_innerDiv_span1 =
+    document.createElement("span");
+  const highlistSection_content_humidity_innerDiv_span2 =
+    document.createElement("span");
+  highlistSection_content_humidity_innerDiv.appendChild(
+    highlistSection_content_humidity_innerDiv_span1
+  );
+  highlistSection_content_humidity_innerDiv_span1.textContent = `${humidity}%`;
 
-  highlistSection_content_windStatus_innerDiv.appendChild(highlistSection_content_windStatus_innerDiv_span2)
-  highlistSection_content_windStatus_innerDiv_span2.textContent = `${wind_degree}° ${wind_dir}`
+  highlistSection_content_humidity_innerDiv.appendChild(
+    highlistSection_content_humidity_innerDiv_span2
+  );
+  highlistSection_content_humidity_innerDiv_span2.textContent =
+    getAirQuality(airQualityIndex);
 
-  const highlistSection_content_uv_innerDiv_span1 = document.createElement('span')
-  const highlistSection_content_uv_innerDiv_span2 = document.createElement('span')
-  highlistSection_content_uv_innerDiv.appendChild(highlistSection_content_uv_innerDiv_span1)
-  highlistSection_content_uv_innerDiv_span1.textContent = `${uv} / 10`
+  const highlistSection_content_windStatus_innerDiv_span1 =
+    document.createElement("span");
+  const highlistSection_content_windStatus_innerDiv_span2 =
+    document.createElement("span");
+  highlistSection_content_windStatus_innerDiv.appendChild(
+    highlistSection_content_windStatus_innerDiv_span1
+  );
+  highlistSection_content_windStatus_innerDiv_span1.textContent = `${wind_kph} km/h`;
 
-  highlistSection_content_uv_innerDiv.appendChild(highlistSection_content_uv_innerDiv_span2)
-  highlistSection_content_uv_innerDiv_span2.textContent = getUVQuality(uv)
+  highlistSection_content_windStatus_innerDiv.appendChild(
+    highlistSection_content_windStatus_innerDiv_span2
+  );
+  highlistSection_content_windStatus_innerDiv_span2.textContent = `${wind_degree}° ${wind_dir}`;
 
-  const highlistSection_quote_p = document.createElement("p")
-  
+  const highlistSection_content_uv_innerDiv_span1 =
+    document.createElement("span");
+  const highlistSection_content_uv_innerDiv_span2 =
+    document.createElement("span");
+  highlistSection_content_uv_innerDiv.appendChild(
+    highlistSection_content_uv_innerDiv_span1
+  );
+  highlistSection_content_uv_innerDiv_span1.textContent = `${uv} / 10`;
+
+  highlistSection_content_uv_innerDiv.appendChild(
+    highlistSection_content_uv_innerDiv_span2
+  );
+  highlistSection_content_uv_innerDiv_span2.textContent = getUVQuality(uv);
+
+  const highlistSection_quote_p = document.createElement("p");
+
   getQuote().then((quoteData) => {
     highlistSection_quote_p.textContent = quoteData.text;
   });
-  highlistSection_quote_innerDiv.appendChild(highlistSection_quote_p)
+  highlistSection_quote_innerDiv.appendChild(highlistSection_quote_p);
 }
 
 function getDay(localtime) {
@@ -486,62 +540,50 @@ function getDay(localtime) {
 }
 
 async function getQuote() {
-    try {
-      const response = await fetch("https://type.fit/api/quotes");
-      const data = await response.json();
-      const randomIndex = Math.floor(Math.random() * data.length);
-      return data[randomIndex];
-    } catch (error) {
-      console.error("Error fetching quote:", error);
-      throw new Error("Could not fetch quote");
-    }
-  }
-
-function getAirQuality(airQualityIndex){
-  if(airQualityIndex < 4 && airQualityIndex > 0){
-    return 'Good air quality'
-  }
-  else
-   if(airQualityIndex < 7 && airQualityIndex >= 4){
-     return 'Moderate air quality'
-   }
-   else
-    if(airQualityIndex < 10 && airQualityIndex >= 7){
-     return 'Poor air quality'
-    }
-    else{
-       return 'Very poor air quality'
-      }
-}
-
-function getUVQuality(uv){
-  if(uv >= 0 && uv <3){
-    return 'Low'
-  }
-  else 
-    if(uv >=3 && uv < 6){
-      return 'Moderate'
-    }
-    else
-      if(uv >=6 && uv < 8){
-        return 'High'
-      }
-      else
-        if(uv >= 8 && uv <= 10){
-          return 'Very High'
-        }
-        else{
-          return 'Extreme'
-        }
-}
-
-async function getDefaultCityWeather() {
-  const defaultCity = "Joshimath";
-
   try {
-    const defaultWeatherData = await getWeatherData(defaultCity);
-    displayWeatherInfo(defaultWeatherData);
+    const response = await fetch("https://type.fit/api/quotes");
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch quotes");
+    }
+
+    const data = await response.json();
+
+    if (!data || data.length === 0) {
+      throw new Error("Empty or invalid data received");
+    }
+
+    const randomIndex = Math.floor(Math.random() * data.length);
+    return data[randomIndex];
   } catch (error) {
-    displayError(error);
+    console.error("Error fetching quote:", error);
+    displayError("Could not fetch a quote. Please try again later.");
+    throw new Error("Could not fetch quote");
+  }
+}
+
+function getAirQuality(airQualityIndex) {
+  if (airQualityIndex < 4 && airQualityIndex > 0) {
+    return "Good air quality";
+  } else if (airQualityIndex < 7 && airQualityIndex >= 4) {
+    return "Moderate air quality";
+  } else if (airQualityIndex < 10 && airQualityIndex >= 7) {
+    return "Poor air quality";
+  } else {
+    return "Very poor air quality";
+  }
+}
+
+function getUVQuality(uv) {
+  if (uv >= 0 && uv < 3) {
+    return "Low";
+  } else if (uv >= 3 && uv < 6) {
+    return "Moderate";
+  } else if (uv >= 6 && uv < 8) {
+    return "High";
+  } else if (uv >= 8 && uv <= 10) {
+    return "Very High";
+  } else {
+    return "Extreme";
   }
 }
