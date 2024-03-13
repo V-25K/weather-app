@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  
   // Default city
   await getDefaultCityWeather();
 });
