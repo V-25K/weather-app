@@ -1,3 +1,4 @@
+import { myApiKey } from "/apikey.js";
 document.addEventListener("DOMContentLoaded", async () => {
   
   // Default city
@@ -9,8 +10,8 @@ const cityInput = document.getElementById("city");
 const card = document.querySelector(".weather-card");
 const lower_card = document.querySelector(".other-info-container");
 const right_card = document.querySelector(".right-container");
-const apiKey = "db19ec52d7734e49968145350240703";
-let isMetric = true;
+const apiKey = myApiKey;
+/* let isMetric = true; */
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
