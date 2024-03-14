@@ -4,7 +4,7 @@
 
 This Weather App is a simple web application that allows users to check the current weather and forecast for a specific city. The app uses the WeatherAPI to fetch real-time weather data and provides a user-friendly interface to display the information.
 
-DEMO: https://v-25k.github.io/weather-app/
+DEMO: [https://v-25k.github.io/weather-app/](https://weather-jaano-aaj-ka.netlify.app/)
 
 ## Features
 
